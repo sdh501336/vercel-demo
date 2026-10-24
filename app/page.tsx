@@ -3,8 +3,9 @@
 import { useState } from "react";
 
 const DEPLOY_CMD = `cd "/Users/sdh/Desktop/未命名文件夹/vercel-demo"
-VERCEL_TOKEN=<桌面文件里的 token> \\
-  /tmp/vercel-cli/node_modules/.bin/vercel deploy --prod --yes`;
+git add -A
+git commit -m "更新首页"
+git push          # 推上去，Vercel 自动发布`;
 
 const STEPS = [
   {
@@ -25,7 +26,7 @@ const STEPS = [
 ];
 
 const PROMPTS = [
-  { k: "部署", v: "帮我部署一下，用桌面的 token" },
+  { k: "发布", v: "改完首页推上去，让它自动发布" },
   { k: "改文案", v: "把首页标题改成 XXX，然后重新部署" },
   { k: "排错", v: "构建失败了，日志在下面：……" },
   { k: "加功能", v: "加一个 /api/contact 接口，收表单" },
