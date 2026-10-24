@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# vercel-demo
 
-## Getting Started
+一个最小的 Next.js（App Router）演示项目，用来走通「本地开发 → GitHub → Vercel 自动部署」的完整链路。
 
-First, run the development server:
+- 线上地址：https://vercel-demo-neon-tau.vercel.app
+- 接口示例：https://vercel-demo-neon-tau.vercel.app/api/hello
+- 仓库地址：https://github.com/sdh501336/vercel-demo
+
+## 本地开发
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+改 `app/page.tsx` 保存即热更新。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 构建与检查
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build        # 生产构建，发布前先跑一次
+npm run lint         # 代码检查
+```
 
-## Learn More
+## 部署
 
-To learn more about Next.js, take a look at the following resources:
+仓库已接入 Vercel：**push 到 `main` 就自动部署生产环境**，其它分支/PR 会生成预览地址。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git add -A
+git commit -m "feat: 你的改动"
+git push
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+也可以不用 Git，直接命令行发布本地代码：
 
-## Deploy on Vercel
+```bash
+npx vercel@latest deploy --prod --yes
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+首次执行会要求登录：`npx vercel@latest login`（浏览器授权即可）。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 目录结构
+
+```
+app/
+  page.tsx              # 首页，调用 /api/hello 展示运行时信息
+  api/hello/route.ts    # 最小 Serverless 接口，返回 env / region / commit
+```
+
+## 接口
+
+`GET /api/hello`
+
+```json
+{
+  "ok": true,
+  "message": "hello from vercel",
+  "env": "production",
+  "region": "iad1",
+  "commit": "e8445a0",
+  "now": "2026-10-24T18:48:33.399Z"
+}
+```
+
+`env`、`region`、`commit` 来自 Vercel 注入的环境变量，所以访问线上接口就能确认当前跑的是哪一次提交。
+
+## 常用命令速查
+
+| 场景 | 命令 |
+| --- | --- |
+| 看当前状态 | `git status` |
+| 拉取线上最新 | `git pull` |
+| 新建分支干活 | `git switch -c feat/xxx` |
+| 推送新分支 | `git push -u origin feat/xxx` |
+| 本地跑生产构建 | `npm run build && npm start` |
