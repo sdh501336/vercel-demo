@@ -20,10 +20,10 @@ npm run dev          # http://localhost:3000
 ## 构建与检查
 
 ```bash
-npm run build        # 生产构建，发布前先跑一次
-npm run lint         # 代码检查
-npx next typegen     # 生成路由类型（typecheck 前必须先跑）
-npx tsc --noEmit     # 类型检查
+npm run check        # 一键全跑：lint → typegen+tsc → build（push 前跑这个）
+npm run build        # 仅生产构建
+npm run lint         # 仅代码检查
+npm run typecheck    # 仅类型检查（内部已含 next typegen）
 ```
 
 每次 push 或开 PR，GitHub Actions 会自动跑 `lint → typegen → tsc → build`，
