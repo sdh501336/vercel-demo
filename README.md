@@ -1,5 +1,7 @@
 # vercel-demo
 
+[![CI](https://github.com/sdh501336/vercel-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/sdh501336/vercel-demo/actions/workflows/ci.yml)
+
 一个最小的 Next.js（App Router）演示项目，用来走通「本地开发 → GitHub → Vercel 自动部署」的完整链路。
 
 - 线上地址：https://vercel-demo-neon-tau.vercel.app
@@ -20,7 +22,12 @@ npm run dev          # http://localhost:3000
 ```bash
 npm run build        # 生产构建，发布前先跑一次
 npm run lint         # 代码检查
+npx next typegen     # 生成路由类型（typecheck 前必须先跑）
+npx tsc --noEmit     # 类型检查
 ```
+
+每次 push 或开 PR，GitHub Actions 会自动跑 `lint → typegen → tsc → build`，
+工作流定义在 `.github/workflows/ci.yml`。红了看日志：`gh run list` / `gh run view --log-failed`。
 
 ## 部署
 
